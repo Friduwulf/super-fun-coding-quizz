@@ -29,11 +29,14 @@ var questionTwoEl = document.querySelector("#two");
 var questionThreeEl = document.querySelector("#three");
 var questionFourEl = document.querySelector("#four");
 var scoreKeeperEl = document.querySelector(".score-keeper");
+var finalScoreEl = document.querySelector(".score-text");
+var penaltyEl = document.querySelector(".penalty");
 //////////////////////
 // Random Variables //
 //////////////////////
 var questionNum = 0;
 var score = 0;
+var timeLeft = 180;
 ///////////
 // Timer //
 ///////////
@@ -41,9 +44,13 @@ var score = 0;
 function stopTime(timeInterval) {
     clearInterval(timeInterval);
 }
+
+function penalty() {
+    timeLeft = timeLeft - 10;
+    penaltyEl.setAttribute("id", "visible");
+}
 //Sets the timer parameters.
 function timer() {
-    var timeLeft = 180;
 
     var timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
@@ -53,9 +60,10 @@ function timer() {
         else {
             timeEl.textContent = 'Game Over';
             end();
-            stopTime();
+            stopTime(timeInterval);
         }
     }, 1000);
+    return timeLeft;
 }
 ////////////////
 // Navigation //
@@ -165,10 +173,10 @@ function populateQuiz() {
         return currentAnswer;
     }
     else if (questionNum >= questions.length) {
-        stopTime();
         end();
         timeEl.textContent = "Good Job!"
     }
+    penaltyEl.textContent = '';
     return currentAnswer;
 }
 //Prevents selecting multiple answers.
@@ -193,7 +201,19 @@ function buttonReset() {
 function incrementScore() {
     score++;
     scoreKeeperEl.textContent = "Your Score: " + score;
+    finalScoreEl.textContent = "Your final score is: " + score + "!";
 }
+///////////////////////
+// Score Submissions //
+///////////////////////
+
+
+
+
+
+
+
+
 //////////////////////
 // Button Listeners //
 //////////////////////
@@ -206,6 +226,9 @@ beginEl.addEventListener("click", function() {
 //Submits high score and moves page to leaderboard on click.
 submitEl.addEventListener("click", function() {
     toHighscores();
+    //place initials and score in order of highest to lowest
+    //store initials input
+    //reset score
 });
 //Brings user to leaderboard on click.
 viewHighscoreEl.addEventListener("click", function() {
@@ -227,6 +250,7 @@ answerOneEl.addEventListener("click", function() {
     console.log(selectedAnswer + currentAnswer);
     if (selectedAnswer != currentAnswer) {
         answerOneEl.setAttribute("style", "background-color: #A22C29");
+        penalty();
     }
     else if (selectedAnswer == currentAnswer) {
         answerOneEl.setAttribute("style", "background-color: #49be25;");
@@ -240,6 +264,7 @@ answerTwoEl.addEventListener("click", function() {
     var selectedAnswer = 'two';
     if (selectedAnswer != currentAnswer) {
         answerTwoEl.setAttribute("style", "background-color: #A22C29;");
+        penalty();
     }
     else if (selectedAnswer == currentAnswer) {
         answerTwoEl.setAttribute("style", "background-color: #49be25;");
@@ -254,6 +279,7 @@ answerThreeEl.addEventListener("click", function() {
     var selectedAnswer = 'three';
     if (selectedAnswer != currentAnswer) {
         answerThreeEl.setAttribute("style", "background-color: #A22C29;");
+        penalty();
     }
     else if (selectedAnswer == currentAnswer) {
         answerThreeEl.setAttribute("style", "background-color: #49be25;");
@@ -267,7 +293,8 @@ answerThreeEl.addEventListener("click", function() {
 answerFourEl.addEventListener("click", function() {
     var selectedAnswer = 'four';
     if (selectedAnswer != currentAnswer) {
-        answerFourEl.setAttribute("style", "background-color: #A22C29;");;
+        answerFourEl.setAttribute("style", "background-color: #A22C29;");
+        penalty();
     }
     else if (selectedAnswer == currentAnswer) {
         answerFourEl.setAttribute("style", "background-color: #49be25;");
