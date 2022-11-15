@@ -1,6 +1,6 @@
 /* Global settings */
 * {
-    /* border: 1px solid blue; */
+    border: 1px solid blue;
     font-family: 'montserrat', sans-serif;
     font-weight: 500;
     color: #B9BAA3;
@@ -34,10 +34,9 @@ button:hover {
 .outside {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     padding: 1em;
-    height: 95vh;
 }
 
 /* Info bar */
@@ -75,11 +74,11 @@ button:hover {
 }
 
 /* Main Menu */
-.start-menu, .quiz, .game-over {
+.start-menu, .quiz, .game-over, .highscore-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 45vh;
+    margin-bottom: 20vh;
 }
 
 .start-menu p {
@@ -144,9 +143,9 @@ button:hover {
 }
 
 /* Quiz Completed Screen */
-/* .game-over {
+.game-over {
     display: none;
-} */
+}
 
 .initials {
     display: flex;
@@ -156,21 +155,38 @@ button:hover {
     margin: 0.2em;
 }
 
+.score-text {
+    font-size: 1.4em;
+    margin: 0.2em;
+    text-align: center;
+    text-decoration: underline;
+}
+
 .initial-text {
     font-size: 1.4em;
     margin: 0.2em;
-}
-
-.score-text {
-    font-size: 1.4em;
-    margin: 0.2em 0.7em;
-    text-decoration: underline;
 }
 
 .initial-input {
     text-align: center;
     width: 30%;
     height: 60%;
+    color: #0A100D;
+}
+
+/* Highscore Screen */
+.highscore-page {
+    /* display: none; */
+}
+
+.highscores li {
+    text-align: center;
+}
+
+.end-buttons {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -196,6 +212,10 @@ button:hover {
     .initial-text {
         text-align: center;
     }
+
+    .end-buttons {
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 440px) {
@@ -204,4 +224,3 @@ button:hover {
         justify-content: space-between;
     }
 }
-
