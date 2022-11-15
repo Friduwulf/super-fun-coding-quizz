@@ -104,38 +104,38 @@ function toHighscores() {
 ////////////////////////////////
 //Array of questions.
 var questions = [
-    'Test question number 1 this is a test of length this is a test of length this is a test of length',
-    'Test question number 2',
-    'Test question number 3',
-    'test question number 4',
+    'What is the type of loop that continues through a block of code as long as the specified condition remains True?',
+    'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
+    'This is what you call the guide that defines coding conventions for all projects',
+    'What tag is used to define a hyperlink, or link to another page?'
 ];
 //Array of answers for option 1.
 var optionOne = [
-    'answer for question 1',
-    'answer for question 2',
-    'answer for question 3',
-    'answer for question 4'
+    'Conditional Loop',
+    'Recorders',
+    'Style Guide',
+    '<p>'
 ];
 //Array of answers for option 2.
 var optionTwo = [
-    'answer for question 1',
-    'answer for question 2',
-    'answer for question 3',
-    'answer for question 4'
+    'For Loop',
+    'Strings',
+    'Main Textbook',
+    '<a>'
 ];
 //Array of answers for option 3.
 var optionThree = [
-    'answer for question 1',
-    'answer for question 2',
-    'answer for question 3',
-    'answer for question 4'
+    'While Loop',
+    'Arrays',
+    'Coding Dictionary',
+    '<link>'
 ];
 //Array of answers for option 4.
 var optionFour = [
-    'answer for question 1',
-    'answer for question 2',
-    'answer for question 3',
-    'answer for question 4'
+    'Reg Loop',
+    'Variables',
+    'Developer`s Reference',
+    '<section>'
 ];
 //Array of correct option choices.
 var correctAnswerList = [
