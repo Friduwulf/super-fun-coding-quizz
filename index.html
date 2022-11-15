@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="reset" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Coding Quiz</title>
+</head>
+
+<body>
+
+    <div class="outside">
+
+        <div class="info-bar">
+            <button id="highscore-button">View Highscores</button>
+            <h1>Fun Coding Quiz</h1>
+            <p id="timer-text">Timer: 00:00</p>
+        </div>
+
+        <main class="main-container">
+
+            <header class="start-menu">
+                <h2>Try This Fun Quiz!</h2>
+                <p>Press "Begin Quiz" to start!</p>
+                <button>Begin Quiz</button>
+            </header>
+    
+            <div class="quiz">
+                <section class="question">
+                    <h2>Question #1</h2>
+                    <h3>Some test text</h3>
+                    <ul class="answers-list">
+                        <li><button class="answer" id="one">Answer 1</button></li>
+                        <li><button class="answer" id="two">Answer 2</button></li>
+                        <li><button class="answer" id="three">Answer 3</button></li>
+                        <li><button class="answer" id="four">Answer 4</button></li>
+                    </ul>
+                    <div class="response-bar">
+                        <p class="response">Correct!</p>
+                        <button class="next">Next</button>
+                    </div>
+                </section>
+
+            </div>
+            <section class="game-over">
+                <h2>Quiz Complete!</h2>
+                <p class="score-text">Your final score is</p>
+                <div class="initials">
+                    <p class="initial-text">Input initials for the leaderboard:</p>
+                    <input class="initial-input" type="text" placeholder="Initials">
+                    <button class="submit-button">Submit</button>
+                </div>
+            </section>
+    
+        </main>
+
+    </div>
+
+
+</body>
+</html>
