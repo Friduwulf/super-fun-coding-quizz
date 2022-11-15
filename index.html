@@ -17,21 +17,21 @@
         <div class="info-bar">
             <button id="highscore-button">View Highscores</button>
             <h1>Fun Coding Quiz</h1>
-            <p id="timer-text">Timer: 00:00</p>
+            <p id="timer-text">Timer: 180s</p>
         </div>
 
         <main class="main-container">
 
-            <header class="start-menu">
+            <header class="start-menu" id="display">
                 <h2>Try This Fun Quiz!</h2>
                 <p>Press "Begin Quiz" to start!</p>
-                <button>Begin Quiz</button>
+                <button id="begin-button">Begin Quiz</button>
             </header>
     
-            <div class="quiz">
+            <div class="quiz" id="hidden">
                 <section class="question">
                     <h2>Question #1</h2>
-                    <h3>Some test text</h3>
+                    <h3 id="questions">Some test text</h3>
                     <ul class="answers-list">
                         <li><button class="answer" id="one">Answer 1</button></li>
                         <li><button class="answer" id="two">Answer 2</button></li>
@@ -39,13 +39,13 @@
                         <li><button class="answer" id="four">Answer 4</button></li>
                     </ul>
                     <div class="response-bar">
-                        <p class="response">Correct!</p>
+                        <p class="score-keeper">Your Score: 0</p>
                         <button class="next">Next</button>
                     </div>
                 </section>
 
             </div>
-            <section class="game-over">
+            <section class="game-over" id="hidden">
                 <h2>Quiz Complete!</h2>
                 <p class="score-text">Your final score is</p>
                 <div class="initials">
@@ -54,7 +54,7 @@
                     <button class="submit-button">Submit</button>
                 </div>
             </section>
-            <section class="highscore-page">
+            <section class="highscore-page" id="hidden">
                 <h2>The best of the best!</h2>
                 <ol class="highscores">
 
@@ -69,6 +69,6 @@
 
     </div>
 
-
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>

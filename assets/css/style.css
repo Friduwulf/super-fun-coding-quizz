@@ -1,6 +1,6 @@
 /* Global settings */
 * {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     font-family: 'montserrat', sans-serif;
     font-weight: 500;
     color: #B9BAA3;
@@ -91,15 +91,7 @@ button:hover {
     margin: 0 auto;
 }
 
-.start-menu {
-    display: none;
-}
-
 /* Quiz Content */
-
-.quiz{
-    display: none;
-}
 
 .question {
     display: flex;
@@ -132,7 +124,7 @@ button:hover {
     align-items: center;
 }
 
-.response {
+.score-keeper {
     width: 10rem;
     text-align: center;
     font-size: 1.4em;
@@ -143,9 +135,6 @@ button:hover {
 }
 
 /* Quiz Completed Screen */
-.game-over {
-    display: none;
-}
 
 .initials {
     display: flex;
@@ -175,9 +164,6 @@ button:hover {
 }
 
 /* Highscore Screen */
-.highscore-page {
-    /* display: none; */
-}
 
 .highscores li {
     text-align: center;
@@ -187,6 +173,11 @@ button:hover {
     display: flex;
     justify-content: center;
     gap: .5rem;
+}
+
+/* Hide/Display */
+#hidden {
+    display: none;
 }
 
 @media screen and (max-width: 800px) {
