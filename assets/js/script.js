@@ -1,7 +1,3 @@
-// To time interval needed to be created outside of function, no need to find way to call it on
-// finish click
-// to have the red -10s, remove span from inside the time element, create its own p tag and put it there
-
 /////////////
 // Buttons //
 /////////////
@@ -27,6 +23,7 @@ var highscoreEl = document.querySelector(".highscore-page");
 // Text Elements //
 ///////////////////
 var answerListEl = document.querySelector(".answers-list");
+var questionNumberEl = document.querySelector(".questionNumber");
 var questionsEl = document.querySelector("#questions");
 var questionOneEl = document.querySelector("#one");
 var questionTwoEl = document.querySelector("#two");
@@ -41,6 +38,7 @@ var highscoresListEl = document.querySelector(".highscores");
 // Random Variables //
 //////////////////////
 var highscores = [];
+var quizNumber = 0;
 var questionNum = 0;
 var score = 0;
 var timeLeft = 180;
@@ -163,7 +161,9 @@ var correctAnswerList = [
 var currentAnswer = '';
 //Pulls questions and answers from their respective arrays and populates the quiz. Also finds the correct answer.
 function populateQuiz() {
+    quizNumber = questionNum + 1;
     currentAnswer = correctAnswerList[questionNum];
+    questionNumberEl.textContent = "Question #" + quizNumber;
     questionsEl.textContent = questions[questionNum];
     questionOneEl.textContent = optionOne[questionNum];
     questionTwoEl.textContent = optionTwo[questionNum];
@@ -218,6 +218,8 @@ function incrementScore() {
 //Resets the score, and text that includes the score.
 function resetEverything() {
     score = 0;
+    buttonReset();
+    quizNumber = 0;
     initialsEl.value = '';
     scoreKeeperEl.textContent = "Your Score: " + score;
     finalScoreEl.textContent = "Your final score is: " + score + "!";
@@ -279,6 +281,7 @@ submitEl.addEventListener("click", function(event) {
     storeScores();
     renderHighscores();
     toHighscores();
+    resetEverything();
 });
 //Brings user to leaderboard on click.
 viewHighscoreEl.addEventListener("click", function() {
@@ -294,12 +297,10 @@ nextEl.addEventListener("click", function() {
     buttonReset();
     populateQuiz();
     //If on the last question, stop time when button is clicked, and change button back to "Next".
-    if (nextEl.textContent === "Finish") {
-        nextEl.addEventListener("click", function() {
-            stopTime();
-            timeLeft = 180;
-            nextEl.textContent = "Next";
-        });
+    if (quizNumber > questions.length) {
+        stopTime();
+        timeLeft = 180;
+        nextEl.textContent = "Next";
     }
     nextEl.disabled = true;
 });
