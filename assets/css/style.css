@@ -49,15 +49,21 @@ button:hover {
 /* Info bar */
 .info-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 0.4em;
     align-items: center;
     width: 100%;
-    margin-bottom: 1em;
 }
 
 .info-bar h1 {
-    margin: 0.2em
+    margin: 0.2em;
+}
+
+.penalty-text {
+    width: 65%;
+    display: flex;
+    justify-content: flex-end;
+    transform: translateY(-2rem);
 }
 
 #invisible {
@@ -66,9 +72,9 @@ button:hover {
 
 #visible {
     color: #A22C29;
-    font-size: 0.5em;
-    width: 2em;
+    font-size: 1.5em;
     visibility: visible;
+    margin: 0;
 }
 
 #timer-text {

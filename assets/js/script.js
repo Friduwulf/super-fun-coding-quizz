@@ -69,6 +69,7 @@ function timer() {
             timeEl.textContent = 'Game Over';
             end();
             stopTime();
+            resetEverything();
         }
     }, 1000);
     return timeLeft;
@@ -173,6 +174,7 @@ function populateQuiz() {
         questionNum++;
         console.log("Question #: " + questionNum);
         console.log("answer #: " + currentAnswer);
+        penaltyEl.setAttribute("id", "invisible");
         return currentAnswer;
     }
     else if (questionNum === questions.length - 1) {
@@ -180,13 +182,14 @@ function populateQuiz() {
         questionNum++;
         console.log("Question #: " + questionNum);
         console.log("answer #: " + currentAnswer);
+        penaltyEl.setAttribute("id", "invisible");
         return currentAnswer;
     }
     else if (questionNum >= questions.length) {
         end();
         timeEl.textContent = "Good Job!"
+        penaltyEl.setAttribute("id", "invisible");
     }
-    penaltyEl.textContent = '';
     return currentAnswer;
 }
 //Prevents selecting multiple answers.
@@ -221,9 +224,11 @@ function resetEverything() {
     buttonReset();
     quizNumber = 0;
     initialsEl.value = '';
+    timeLeft = 180;
     scoreKeeperEl.textContent = "Your Score: " + score;
     finalScoreEl.textContent = "Your final score is: " + score + "!";
     scoreListText = " Had a score of " + score + "!";
+    penaltyEl.setAttribute("id", "invisible");
     return score;
 }
 ///////////////////////
