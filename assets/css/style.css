@@ -183,8 +183,17 @@ button:hover {
 
 /* Highscore Screen */
 
+.highscores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .highscores li {
+    font-size: large;
+    width: 30rem;
     text-align: center;
+    padding-bottom: 1rem;
 }
 
 .end-buttons {

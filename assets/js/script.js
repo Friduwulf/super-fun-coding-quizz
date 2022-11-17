@@ -1,3 +1,7 @@
+// To time interval needed to be created outside of function, no need to find way to call it on
+// finish click
+// to have the red -10s, remove span from inside the time element, create its own p tag and put it there
+
 /////////////
 // Buttons //
 /////////////
@@ -31,20 +35,26 @@ var questionFourEl = document.querySelector("#four");
 var scoreKeeperEl = document.querySelector(".score-keeper");
 var finalScoreEl = document.querySelector(".score-text");
 var penaltyEl = document.querySelector(".penalty");
+var initialsEl = document.querySelector(".initial-input");
+var highscoresListEl = document.querySelector(".highscores");
 //////////////////////
 // Random Variables //
 //////////////////////
+var highscores = [];
 var questionNum = 0;
 var score = 0;
 var timeLeft = 180;
+var timeInterval = null;
+var initialSubmission = null;
+var scoreListText = " Had a score of " + score + "!";
 ///////////
 // Timer //
 ///////////
-//Stops Timer
-function stopTime(timeInterval) {
+//Stops Timer.
+function stopTime() {
     clearInterval(timeInterval);
 }
-
+//Applies a 10s penalty to the timer if a wrong answer is selected.
 function penalty() {
     timeLeft = timeLeft - 10;
     penaltyEl.setAttribute("id", "visible");
@@ -52,7 +62,7 @@ function penalty() {
 //Sets the timer parameters.
 function timer() {
 
-    var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
             timeEl.textContent = 'Timer: ' + timeLeft + 's';
             timeLeft--;
@@ -60,7 +70,7 @@ function timer() {
         else {
             timeEl.textContent = 'Game Over';
             end();
-            stopTime(timeInterval);
+            stopTime();
         }
     }, 1000);
     return timeLeft;
@@ -202,18 +212,52 @@ function incrementScore() {
     score++;
     scoreKeeperEl.textContent = "Your Score: " + score;
     finalScoreEl.textContent = "Your final score is: " + score + "!";
+    scoreListText = " Had a score of " + score + "!"
+   // return scoreListText;
+}
+//Resets the score, and text that includes the score.
+function resetEverything() {
+    score = 0;
+    initialsEl.value = '';
+    scoreKeeperEl.textContent = "Your Score: " + score;
+    finalScoreEl.textContent = "Your final score is: " + score + "!";
+    scoreListText = " Had a score of " + score + "!";
+    return score;
 }
 ///////////////////////
 // Score Submissions //
 ///////////////////////
+//Renders score submissions to the leaderboard.
+function renderHighscores() {
+    highscoresListEl.innerHTML = "";
 
+    for (var i = 0; i < highscores.length; i++) {
+        var highscore = highscores[i];
 
+        var li = document.createElement("li");
+        li.textContent = highscore;
+        li.setAttribute("data-index", i);
+        highscoresListEl.appendChild(li);
+    }
+}
 
+function initHighscores() {
+    var storedScores =JSON.parse(localStorage.getItem("highscores"));
 
-
-
-
-
+    if (storedScores !== null) {
+        highscores = storedScores;
+    }
+    renderHighscores();
+}
+//Stores the new score and initials in local storage
+function storeScores() {
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+}
+//Clears list items from highscore list, and data from local storage
+function clearHighscores() {
+    highscoresListEl.innerHTML = "";
+    localStorage.clear();
+}
 //////////////////////
 // Button Listeners //
 //////////////////////
@@ -222,13 +266,19 @@ beginEl.addEventListener("click", function() {
     timer();
     begin();
     populateQuiz();
+    resetEverything();
 });
 //Submits high score and moves page to leaderboard on click.
-submitEl.addEventListener("click", function() {
+submitEl.addEventListener("click", function(event) {
+    event.preventDefault();
+    var highscoreText = initialsEl.value.trim() + scoreListText;
+    if (highscoreText === "") {
+        return;
+    }
+    highscores.push(highscoreText);
+    storeScores();
+    renderHighscores();
     toHighscores();
-    //place initials and score in order of highest to lowest
-    //store initials input
-    //reset score
 });
 //Brings user to leaderboard on click.
 viewHighscoreEl.addEventListener("click", function() {
@@ -237,11 +287,20 @@ viewHighscoreEl.addEventListener("click", function() {
 //Returns user to the start menu on click.
 returnEl.addEventListener("click", function() {
     menu();
+    resetEverything();
 });
 //Populates the quiz with the next quesiton and disables the next button on click.
 nextEl.addEventListener("click", function() {
     buttonReset();
     populateQuiz();
+    //If on the last question, stop time when button is clicked, and change button back to "Next".
+    if (nextEl.textContent === "Finish") {
+        nextEl.addEventListener("click", function() {
+            stopTime();
+            timeLeft = 180;
+            nextEl.textContent = "Next";
+        });
+    }
     nextEl.disabled = true;
 });
 //Clicking option one will turn it green if its the correct answer, red if it's incorrect. Re-enable next button, disable option buttons and increment score.
@@ -304,7 +363,7 @@ answerFourEl.addEventListener("click", function() {
     disableButtons();
     nextEl.disabled = false;
 });
-
+//Clicking "Clear Highscores" will remove all highscores from list and local storage
 clearEl.addEventListener("click", function() {
-
+    clearHighscores();
 });
