@@ -41,16 +41,23 @@ var highscores = [];
 var quizNumber = 0;
 var questionNum = 0;
 var score = 0;
-var timeLeft = 180;
+var startTime = 90;
+var timeLeft = startTime;
 var timeInterval = null;
 var initialSubmission = null;
 var scoreListText = " Had a score of " + score + "!";
 ///////////
 // Timer //
 ///////////
+//Sets timer to whatever I set.
+window.onload = function() {
+        timeEl.textContent = "Timer: " + startTime + "s";
+        submitEl.disabled = true;
+    }
 //Stops Timer.
 function stopTime() {
     clearInterval(timeInterval);
+    timeLeft = startTime;
 }
 //Applies a 10s penalty to the timer if a wrong answer is selected.
 function penalty() {
@@ -66,10 +73,10 @@ function timer() {
             timeLeft--;
         }
         else {
-            timeEl.textContent = 'Game Over';
             end();
             stopTime();
             resetEverything();
+            timeEl.textContent = 'Game Over';
         }
     }, 1000);
     return timeLeft;
@@ -83,7 +90,7 @@ function menu() {
     quizEl.setAttribute("id", "hidden");
     gameOverEl.setAttribute("id", "hidden");
     highscoreEl.setAttribute("id", "hidden");
-    timeEl.textContent = "Timer: 180s";
+    timeEl.textContent = "Timer: " + startTime + "s";
 }
 //Starts the test and brings up question one.
 function begin() {
@@ -114,37 +121,68 @@ function toHighscores() {
 //Array of questions.
 var questions = [
     'What is the type of loop that continues through a block of code as long as the specified condition remains True?',
-    'In JavaScript, what element is used to store and manipulate text, usually in multiples?',
-    'This is what you call the guide that defines coding conventions for all projects',
-    'What tag is used to define a hyperlink, or link to another page?'
+    'In JavaScript, what element is used to store and manipulate multiple points of data?',
+    'What symbol is used to enclose an array?',
+    'What tag is used to define a hyperlink, or link to another page?',
+    'Every HTML page must include a reference to the external file sheet file inside the ___ element',
+    'What is the CSS property that offers extra information about something when you hover over an element?',
+    'What is the name given to the CSS element that always starts on a new-line and takes up the entire width available to it?',
+    'In JavaScript, what element is used to store and manipulate text usually in multiples?',
+    'What tag can be used to insert a line break or blank line in an HTML document?',
+    'What tag is used to underline a word or line of text?'
 ];
 //Array of answers for option 1.
 var optionOne = [
     'Conditional Loop',
     'Recorders',
-    'Style Guide',
-    '<p>'
+    '()',
+    '<p>',
+    'Header',
+    'Tooltip',
+    'Margin',
+    'Variables',
+    '<br>',
+    '<s>'
+
 ];
 //Array of answers for option 2.
 var optionTwo = [
     'For Loop',
     'Strings',
-    'Main Textbook',
-    '<a>'
+    '{}',
+    '<a>',
+    'Body',
+    'Tutorial',
+    'Block-level',
+    'Arrays',
+    '<body>',
+    '<ul>'
 ];
 //Array of answers for option 3.
 var optionThree = [
     'While Loop',
     'Arrays',
-    'Coding Dictionary',
-    '<link>'
+    '<>',
+    '<link>',
+    '<div>',
+    'Hint',
+    'Line',
+    'Function',
+    '<tab>',
+    '<u>'
 ];
 //Array of answers for option 4.
 var optionFour = [
     'Reg Loop',
     'Variables',
-    'Developer`s Reference',
-    '<section>'
+    '[]',
+    '<section>',
+    '<link>',
+    'Info Block',
+    'spacer',
+    'Strings',
+    '<blank>',
+    '<li>'
 ];
 //Array of correct option choices.
 var correctAnswerList = [
@@ -172,16 +210,12 @@ function populateQuiz() {
     questionFourEl.textContent = optionFour[questionNum];
     if (questionNum < questions.length - 1) {
         questionNum++;
-        console.log("Question #: " + questionNum);
-        console.log("answer #: " + currentAnswer);
         penaltyEl.setAttribute("id", "invisible");
         return currentAnswer;
     }
     else if (questionNum === questions.length - 1) {
         nextEl.textContent = "Finish"
         questionNum++;
-        console.log("Question #: " + questionNum);
-        console.log("answer #: " + currentAnswer);
         penaltyEl.setAttribute("id", "invisible");
         return currentAnswer;
     }
@@ -216,24 +250,30 @@ function incrementScore() {
     scoreKeeperEl.textContent = "Your Score: " + score;
     finalScoreEl.textContent = "Your final score is: " + score + "!";
     scoreListText = " Had a score of " + score + "!"
-   // return scoreListText;
 }
 //Resets the score, and text that includes the score.
 function resetEverything() {
     score = 0;
     buttonReset();
     quizNumber = 0;
+    questionNum = 0;
     initialsEl.value = '';
-    timeLeft = 180;
+    stopTime();
+    submitEl.disabled = true;
+    nextEl.textContent = "Next";
     scoreKeeperEl.textContent = "Your Score: " + score;
     finalScoreEl.textContent = "Your final score is: " + score + "!";
     scoreListText = " Had a score of " + score + "!";
     penaltyEl.setAttribute("id", "invisible");
-    return score;
+    timeEl.textContent = "Timer: " + startTime + "s";
 }
 ///////////////////////
 // Score Submissions //
 ///////////////////////
+//Unlocks submit button once text has been entered in initials element.
+function unlockSubmit() {
+    submitEl.disabled = false;
+}
 //Renders score submissions to the leaderboard.
 function renderHighscores() {
     highscoresListEl.innerHTML = "";
@@ -273,7 +313,6 @@ beginEl.addEventListener("click", function() {
     timer();
     begin();
     populateQuiz();
-    resetEverything();
 });
 //Submits high score and moves page to leaderboard on click.
 submitEl.addEventListener("click", function(event) {
@@ -291,6 +330,7 @@ submitEl.addEventListener("click", function(event) {
 //Brings user to leaderboard on click.
 viewHighscoreEl.addEventListener("click", function() {
     toHighscores();
+    resetEverything();
 });
 //Returns user to the start menu on click.
 returnEl.addEventListener("click", function() {
@@ -304,7 +344,7 @@ nextEl.addEventListener("click", function() {
     //If on the last question, stop time when button is clicked, and change button back to "Next".
     if (quizNumber > questions.length) {
         stopTime();
-        timeLeft = 180;
+        timeLeft = startTime;
         nextEl.textContent = "Next";
     }
     nextEl.disabled = true;
@@ -312,7 +352,6 @@ nextEl.addEventListener("click", function() {
 //Clicking option one will turn it green if its the correct answer, red if it's incorrect. Re-enable next button, disable option buttons and increment score.
 answerOneEl.addEventListener("click", function() {
     var selectedAnswer = 'one';
-    console.log(selectedAnswer + currentAnswer);
     if (selectedAnswer != currentAnswer) {
         answerOneEl.setAttribute("style", "background-color: #A22C29");
         penalty();
@@ -335,7 +374,6 @@ answerTwoEl.addEventListener("click", function() {
         answerTwoEl.setAttribute("style", "background-color: #49be25;");
         incrementScore();
     }
-    console.log(selectedAnswer);
     disableButtons();
     nextEl.disabled = false;
 });
@@ -350,7 +388,6 @@ answerThreeEl.addEventListener("click", function() {
         answerThreeEl.setAttribute("style", "background-color: #49be25;");
         incrementScore();
     }
-    console.log(selectedAnswer);
     disableButtons();
     nextEl.disabled = false;
 });
@@ -365,7 +402,6 @@ answerFourEl.addEventListener("click", function() {
         answerFourEl.setAttribute("style", "background-color: #49be25;");
         incrementScore();
     }
-    console.log(selectedAnswer);
     disableButtons();
     nextEl.disabled = false;
 });

@@ -17,7 +17,7 @@
         <div class="info-bar">
             <button id="highscore-button">View Highscores</button>
             <h1>Fun Coding Quiz</h1>
-            <p id="timer-text">Timer: 180s</p>
+            <p id="timer-text"></p>
         </div>
 
         <div class="penalty-text">
@@ -28,7 +28,8 @@
 
             <header class="start-menu" id="display">
                 <h2>Try This Fun Quiz!</h2>
-                <p>Press "Begin Quiz" to start!</p>
+                <p>Press "Begin Quiz" to start! Every incorrect answer subtracts 10s,<br>
+                    if you run out of time, your score is 0!</p>
                 <button id="begin-button">Begin Quiz</button>
             </header>
     
@@ -54,7 +55,7 @@
                 <p class="score-text">Your final score is</p>
                 <div class="initials">
                     <p class="initial-text">Input initials for the leaderboard:</p>
-                    <input class="initial-input" type="text" placeholder="Initials">
+                    <input class="initial-input" type="text" placeholder="Initials" oninput="unlockSubmit()">
                     <button class="submit-button">Submit</button>
                 </div>
             </section>
